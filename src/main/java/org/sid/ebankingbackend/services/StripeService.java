@@ -16,7 +16,7 @@ import java.util.Map;
 public class StripeService {
     @PostConstruct
     public void init() {
-        // kan hna
+        Stripe.apiKey = "sk_test_51RUBlfR7XrO637WlNwjJXqs6ARfw3Pdfo0eaRm8Iwo7I1yS7n6szNPt4ZXJnwrHzivP30sBphK4KVsl9v9y45L2C00Vg8aKTZY";
     }
     public Customer createStripeCustomer(String email, String name) throws StripeException {
         // 1. Create a connected account
