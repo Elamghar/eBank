@@ -19,16 +19,15 @@ public class AuthController {
     @Autowired
     private JwtUtil jwtUtil;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequest request) {
-        System.out.println("helllo loginnnn bacj");
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
-        );
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
-        final String token = jwtUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new AuthResponse(userDetails.getUsername(), token));
-    }
+@PostMapping("/login")
+public ResponseEntity<?> login(@RequestBody AuthRequest request) {
+    authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+    );
+    final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
+    final String token = jwtUtil.generateToken(userDetails);
+    return ResponseEntity.ok(new AuthResponse(userDetails.getUsername(), token));
+}
 }
 
 class AuthRequest {
