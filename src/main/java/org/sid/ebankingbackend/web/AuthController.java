@@ -1,5 +1,4 @@
 package org.sid.ebankingbackend.web;
-
 import org.sid.ebankingbackend.javaConfig.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,14 +10,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin("*") // Allow all origins
 public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
-
     @Autowired
     private UserDetailsService userDetailsService;
-
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -28,12 +25,8 @@ public class AuthController {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
         );
-
         final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
         final String token = jwtUtil.generateToken(userDetails);
-
-        //the logs For The user Who  is Logging!!
-        //String currentUser=getCurrentUsername();
         return ResponseEntity.ok(new AuthResponse(userDetails.getUsername(), token));
     }
 }
