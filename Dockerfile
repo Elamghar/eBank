@@ -12,5 +12,5 @@ COPY --from=build /app/target/ebanking-backend.jar app.jar
 # Expose port
 EXPOSE 8085
 
-# Run the Spring Boot application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Run with PORT environment variable
+ENTRYPOINT ["java", "-Xmx512m", "-Xms256m", "-jar", "app.jar", "--server.port=${PORT:-8085}"]
