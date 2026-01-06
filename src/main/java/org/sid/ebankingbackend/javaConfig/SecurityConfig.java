@@ -32,18 +32,18 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authz -> authz
-                    // Public endpoints
+                    // Public endpoints - MUST be before protected ones
                     .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/auth/**").permitAll()
+                    .requestMatchers("/auth/login", "/auth/register").permitAll()
                     .requestMatchers("/customers/test").permitAll()
                     .requestMatchers("/accounts/**").permitAll()
+                    .requestMatchers("/health").permitAll()
                     
                     // Protected endpoints
                     .requestMatchers("/customers/**", "/new-customer/**").hasAnyAuthority("ADMIN", "AGENT")
                     .requestMatchers("/admin-dashboard/**").hasAuthority("ADMIN")
                     .requestMatchers("/customer-dashboard/**").hasAuthority("CLIENT")
-                    .anyRequest().authenticated()
+                    .anyRequest().permitAll() // Temporarily allow all
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
