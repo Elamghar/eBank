@@ -81,7 +81,7 @@ public class BankService {
         this.stripeService = ss;
         this.bankAccountRepository=bankAccountRepository;
         this.dtoMapper=p;
-        // kan hna
+        Stripe.apiKey = "sk_test_51RUBlfR7XrO637WlNwjJXqs6ARfw3Pdfo0eaRm8Iwo7I1yS7n6szNPt4ZXJnwrHzivP30sBphK4KVsl9v9y45L2C00Vg8aKTZY";
     }
 
     public Customer createCustomer(String name, String email, String password, long balance, String phone, String adress,String cin, LocalDate date) throws StripeException {
